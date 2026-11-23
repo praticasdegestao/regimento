@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regimentos Internos das UDs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@600;700;800&family=Red+Hat+Text:ital,wght@0,400;0,500;0,700;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: institucional, claro, cuidadoso — consulta oficial da Embrapa.
+   IDEA: o formulário oficial em papel timbrado; cada Eixo é uma folha com a sua cor.
+   PICTURE: banner com rede de unidades ligadas à Sede; o próprio formulário vem logo abaixo.
+   COLOUR/TYPE: azul institucional + uma cor por Eixo (azul, verde-água, verde, âmbar, roxo); Red Hat.
+   LAYOUT: coluna única de 820px, barra de progresso fixa, abas Formulário / Painel. */
+:root{
+  color-scheme:light dark;
+  --bg:light-dark(#eef2f8,#0d1422);
+  --card:light-dark(#ffffff,#162033);
+  --ink:light-dark(#14213d,#e7ecf5);
+  --mute:light-dark(#5a6680,#9aa7bf);
+  --line:light-dark(#dbe2ee,#26334a);
+  --soft:light-dark(#f5f7fb,#1b263b);
+  --brand:#0b3d91; --brand2:#00843d;
+  --err:#c8102e;
+  --e1:#1f4fd1; --e2:#0e8a8a; --e3:#1d8a3e; --e4:#c26a00; --e5:#6a3fb5;
+}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Red Hat Text",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Red Hat Display",system-ui,sans-serif;margin:0}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px 80px}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #ffb703;outline-offset:2px;border-radius:6px}
+
+/* Topo */
+.top{position:sticky;top:0;z-index:20;background:var(--brand);color:#fff;box-shadow:0 2px 10px #0003}
+.top .in{max-width:820px;margin:0 auto;padding:8px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tabs{display:flex;gap:4px}
+.tab{background:transparent;border:0;color:#cfe0ff;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700;min-height:44px}
+.tab[aria-selected=true]{background:#ffffff22;color:#fff}
+.prog{flex:1;display:flex;align-items:center;gap:10px;min-width:180px}
+.bar{flex:1;height:10px;background:#ffffff30;border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7bd389,#ffd166);transition:width .4s}
+.prog b{font-size:14px;white-space:nowrap}
+
+/* Banner */
+.hero{margin:20px 0 0;border-radius:16px 16px 0 0;overflow:hidden;background:linear-gradient(135deg,#e8f1ff,#e6f7ee)}
+:root[data-theme=dark] .hero{background:linear-gradient(135deg,#132a52,#10351f)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .hero{background:linear-gradient(135deg,#132a52,#10351f)}}
+.hero svg{display:block;width:100%;height:auto}
+.head{background:var(--card);border-top:10px solid var(--brand);border-radius:0 0 16px 16px;padding:22px 24px 18px;box-shadow:0 1px 3px #0001}
+.head h1{font-size:clamp(26px,4.6vw,36px);line-height:1.1;text-wrap:balance}
+.head p{margin:10px 0 0;color:var(--mute)}
+.req{color:var(--err)}
+
+/* Seções e cartões */
+.sec{margin-top:26px}
+.sech{background:var(--c);color:#fff;border-radius:12px 12px 0 0;padding:14px 22px;font:800 15px/1.3 "Red Hat Display",sans-serif;letter-spacing:.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-top:12px;box-shadow:0 1px 3px #0000000d;border-left:6px solid var(--c);scroll-margin-top:80px}
+.sech+.card{margin-top:0;border-radius:0 0 12px 12px}
+.card.bad{border-color:var(--err);box-shadow:0 0 0 2px #c8102e33}
+.qt{font:800 17px/1.35 "Red Hat Display",sans-serif;display:flex;justify-content:space-between;gap:12px}
+.qt .req{flex:none}
+.qd{margin:10px 0 0}
+.ins{margin:12px 0 0;font-weight:700}
+.ins.it{font-style:italic}
+.note{margin:8px 0 0;font-weight:700;padding:8px 12px;background:var(--soft);border-radius:8px;border-left:3px solid var(--c)}
+.opts{display:grid;gap:6px;margin-top:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:10px;cursor:pointer;border:1px solid transparent;min-height:44px}
+.opt:hover{background:var(--soft)}
+.opt input{width:22px;height:22px;margin:1px 0 0;flex:none;accent-color:var(--c);cursor:pointer}
+.opt:has(input:checked){background:color-mix(in srgb,var(--c) 12%,transparent);border-color:color-mix(in srgb,var(--c) 45%,transparent)}
+.opt:has(input:disabled){opacity:.45;cursor:not-allowed}
+.cnt{font-size:13px;color:var(--mute);margin-top:8px}
+.msg{color:var(--err);font-weight:700;font-size:14px;margin-top:10px;display:none}
+.card.bad .msg{display:block}
+
+/* Ordenação */
+.scale{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;font-size:13px;color:var(--mute)}
+.rank{display:grid;gap:8px;margin-top:6px}
+.rrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px;background:var(--soft);border-radius:10px}
+.pills{display:flex;gap:6px}
+.pill{position:relative}
+.pill input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.pill span{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:2px solid var(--line);font-weight:800;background:var(--card);transition:.15s}
+.pill input:checked+span{background:var(--c);border-color:var(--c);color:#fff;transform:scale(1.06)}
+.pill input:focus-visible+span{outline:3px solid #ffb703;outline-offset:2px}
+@media(max-width:560px){.rrow{grid-template-columns:1fr}.pills{justify-content:space-between}.scale{justify-content:flex-start}}
+
+textarea,input[type=text],input[type=email]{width:100%;border:0;border-bottom:2px solid var(--line);background:transparent;padding:10px 2px;font-size:16px;resize:vertical}
+textarea:focus,input[type=text]:focus,input[type=email]:focus{outline:0;border-bottom-color:var(--c)}
+label.fl{display:block;font-weight:700;margin-top:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+.actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:26px;flex-wrap:wrap}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:12px 26px;font-weight:800;cursor:pointer;min-height:48px}
+.btn:disabled{opacity:.6;cursor:wait}
+.ghost{background:transparent;color:var(--brand);border:2px solid currentColor}
+:root[data-theme=dark] .ghost{color:#9cc0ff}
+.toast{margin-top:14px;padding:12px 16px;border-radius:10px;display:none;font-weight:700}
+.toast.err{display:block;background:#c8102e18;color:var(--err);border:1px solid #c8102e55}
+
+.done{text-align:center;padding:44px 24px}
+.done .ok{width:76px;height:76px;border-radius:50%;background:var(--brand2);display:grid;place-items:center;margin:0 auto 16px}
+.done code{background:var(--soft);padding:2px 8px;border-radius:6px}
+
+/* Painel */
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
+.kpi{background:var(--card);border-radius:12px;padding:16px 18px;border-top:5px solid var(--c)}
+.kpi b{display:block;font:800 clamp(26px,5vw,38px)/1.1 "Red Hat Display",sans-serif}
+.kpi span{color:var(--mute);font-size:14px}
+@media(max-width:560px){.kpis{grid-template-columns:1fr}}
+.hb{display:grid;gap:8px;margin-top:12px}
+.hbr{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:4px 12px;font-size:14px}
+.hbr .t{grid-column:1/-1}
+.hbr .tr{height:12px;background:var(--soft);border-radius:8px;overflow:hidden}
+.hbr .tr i{display:block;height:100%;background:var(--c);border-radius:8px}
+.hbr .v{text-align:right;font-weight:800;white-space:nowrap;margin-top:-4px}
+.empty{color:var(--mute);padding:30px;text-align:center}
+.mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:16px;background:var(--soft);padding:5px;border-radius:12px}
+.mode button{border:0;background:transparent;border-radius:9px;padding:11px 10px;font-weight:800;cursor:pointer;min-height:46px;color:var(--mute)}
+.mode button[aria-pressed=true]{background:var(--brand);color:#fff;box-shadow:0 2px 6px #0b3d9144}
+.indiv{margin-top:16px;border-top:1px dashed var(--line);padding-top:10px}
+.indiv summary{cursor:pointer;font-weight:800;font-size:14px;color:var(--c);min-height:32px}
+.indiv table{margin-top:6px}
+.pbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px;background:var(--card);padding:12px;border-radius:12px;border:1px solid var(--line)}
+.pbar select{flex:1;min-width:220px;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);min-height:44px}
+.sbtn:disabled{opacity:.45;cursor:default}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pessoa{margin-top:22px;scroll-margin-top:80px}
+.pessoa+.pessoa{margin-top:48px;padding-top:28px;border-top:3px solid var(--line)}
+.ph{display:flex;gap:16px;align-items:center;background:var(--brand);color:#fff;border-radius:14px;padding:18px 22px}
+.ph h3{font:800 clamp(22px,3.6vw,28px)/1.15 "Red Hat Display",sans-serif;margin:0}
+.ph p{margin:4px 0 0;color:#d6e4ff;overflow-wrap:anywhere}.ph p b{color:#fff}
+.av{flex:none;width:58px;height:58px;border-radius:50%;background:#ffd166;color:#0b3d91;display:grid;place-items:center;font:800 22px "Red Hat Display",sans-serif}
+.cmp{display:grid;gap:6px;margin-top:12px}
+.co{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:6px 16px;align-items:center;padding:9px 12px;border-radius:10px;border:1px solid transparent}
+.co .ct{color:var(--mute)}
+.co.sel{background:color-mix(in srgb,var(--c) 13%,transparent);border-color:var(--c)}.co.sel .ct{color:var(--ink);font-weight:700}
+.co .tr{height:8px;background:var(--soft);border-radius:6px;overflow:hidden}.co .tr i{display:block;height:100%;background:color-mix(in srgb,var(--c) 55%,transparent)}
+.co small{color:var(--mute);font-size:13px;white-space:nowrap}
+.tag{display:inline-block;background:var(--c);color:#fff;border-radius:999px;padding:0 9px;font-size:13px;font-weight:800;margin-right:4px}
+.nota{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-weight:800}
+.just{margin-top:14px;padding:10px 14px;background:var(--soft);border-radius:10px;border-left:3px solid var(--c)}
+@media(max-width:560px){.co{grid-template-columns:1fr}.mode button{font-size:14px}}
+.tool{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:16px}
+.tool select,.tool input[type=search]{font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);min-height:44px}
+.tool input[type=search]{flex:1;min-width:180px}
+.tool label.ck{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.tool .ck input{width:20px;height:20px;accent-color:var(--brand)}
+.sbtn{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;min-height:44px}
+.sub{display:flex;gap:6px;overflow-x:auto;margin-top:14px;padding-bottom:4px}
+.sub button{flex:none;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;min-height:40px}
+h2.rt{font-size:clamp(22px,3.4vw,28px);margin:34px 0 4px;scroll-margin-top:80px}
+.rsub{color:var(--mute);margin:0 0 6px}
+.names{display:flex;flex-wrap:wrap;gap:4px;grid-column:1/-1}
+.names span{font-size:13px;background:var(--soft);border-radius:999px;padding:1px 9px}
+.stk{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--soft)}
+.stk i{display:block;height:100%}
+.leg{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-top:10px}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.p1{background:color-mix(in srgb,var(--c) 22%,transparent)}.p2{background:color-mix(in srgb,var(--c) 45%,transparent)}
+.p3{background:color-mix(in srgb,var(--c) 72%,transparent)}.p4{background:var(--c)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:800;background:var(--soft);white-space:nowrap}
+td.n,th.n{text-align:right;white-space:nowrap}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tw{background:var(--card);border-radius:12px;border:1px solid var(--line);margin-top:12px}
+tbody tr.go{cursor:pointer}tbody tr.go:hover{background:var(--soft)}
+.matrix td{white-space:nowrap}.matrix td:first-child{white-space:normal;min-width:180px}
+.ficha{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:8px;border-left:6px solid var(--brand);scroll-margin-top:80px}
+.ficha summary{padding:14px 18px;cursor:pointer;font-weight:700;display:flex;flex-wrap:wrap;gap:4px 14px}
+.ficha summary small{font-weight:400;color:var(--mute)}
+.ficha .fb{padding:0 18px 16px}
+.ficha dl{margin:0}.ficha dt{font-weight:800;margin-top:12px;font-size:14px}.ficha dd{margin:2px 0 0}
+.ficha ol{margin:4px 0 0;padding-left:0;list-style:none}.ficha ol b{display:inline-block;min-width:28px}
+.quote{background:var(--card);border-radius:10px;padding:14px 18px;margin-top:8px;border-left:4px solid var(--c)}
+.quote p{margin:0;white-space:pre-wrap}
+.quote footer{font-size:13px;color:var(--mute);margin-top:8px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t-form" aria-selected="true">Formulário</button>
+    <button class="tab" role="tab" id="t-painel" aria-selected="false">Resultados</button>
+  </div>
+  <div class="prog" id="prog"><div class="bar"><i id="barI"></i></div><b id="barT">0 de 8</b></div>
+</div></header>
+
+<main class="wrap">
+  <section id="v-form">
+    <div class="hero" aria-hidden="true">
+      <svg viewBox="0 0 800 190">
+        <defs>
+          <linearGradient id="gb" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1f5fd6"/><stop offset="1" stop-color="#0b3d91"/></linearGradient>
+          <g id="ud"><circle r="24" fill="#fff" stroke="#9bb7e6" stroke-width="2"/><path d="M-11 9h22M-9 6V-4M-3 6V-4M3 6V-4M9 6V-4M-12-6L0-13 12-6Z" stroke="#2a5fbf" stroke-width="2.6" fill="none" stroke-linejoin="round"/></g>
+          <g id="doc"><rect x="-22" y="-28" width="44" height="56" rx="5" fill="#fff" stroke="#b9c8e2"/><path d="M-13-14h26M-13-5h26M-13 4h18" stroke="#9bb0d4" stroke-width="3"/><circle cx="14" cy="20" r="10" fill="#1d8a3e"/><path d="M9 20l4 4 6-8" stroke="#fff" stroke-width="2.6" fill="none"/></g>
+        </defs>
+        <g stroke="#7fa2dd" stroke-width="2" stroke-dasharray="4 5" fill="none">
+          <path d="M400 95L250 40M400 95L245 150M400 95L555 40M400 95L560 150M400 95L140 95M400 95L665 95"/>
+        </g>
+        <use href="#ud" x="250" y="40"/><use href="#ud" x="245" y="150"/><use href="#ud" x="555" y="40"/><use href="#ud" x="560" y="150"/>
+        <use href="#ud" x="140" y="95"/><use href="#ud" x="665" y="95"/>
+        <circle cx="400" cy="95" r="52" fill="#1d8a3e" opacity=".18"/>
+        <circle cx="400" cy="95" r="42" fill="url(#gb)" stroke="#fff" stroke-width="4"/>
+        <path d="M380 112h40M383 107V87M392 107V87M401 107V87M410 107V87M417 107V87M378 84l22-13 22 13Z" stroke="#fff" stroke-width="3.4" fill="none" stroke-linejoin="round"/>
+        <use href="#doc" x="60" y="96"/><use href="#doc" x="748" y="70"/>
+        <path d="M720 190c20-50 45-70 80-80v80Z" fill="#1d8a3e" opacity=".55"/><path d="M0 190c30-40 60-55 95-58-20 25-30 45-35 58Z" fill="#1d8a3e" opacity=".45"/>
+      </svg>
+    </div>
+    <div class="head">
+      <h1>Revisão e Harmonização dos Regimentos Internos das Unidades Descentralizadas da Embrapa</h1>
+      <p><span class="req">*</span> Indica uma pergunta obrigatória</p>
+    </div>
+
+    <form id="f" novalidate>
+      <div class="sec" style="--c:var(--brand)">
+        <div class="sech">IDENTIFICAÇÃO DO RESPONDENTE</div>
+        <div class="card" id="c-id">
+          <div class="grid2">
+            <div><label class="fl" for="nome">Nome</label><input type="text" id="nome" name="nome" autocomplete="name" maxlength="200"></div>
+            <div><label class="fl" for="unidade">Unidade</label><input type="text" id="unidade" name="unidade" maxlength="200" placeholder="Ex.: Embrapa Soja"></div>
+          </div>
+          <label class="fl" for="email">E-mail institucional <span class="req">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="nome.sobrenome@embrapa.br">
+          <div class="msg">Informe um e-mail válido.</div>
+        </div>
+      </div>
+      <div id="qs"></div>
+
+      <div class="toast" id="toast"></div>
+      <div class="actions">
+        <button type="button" class="btn ghost" id="limpar">Limpar formulário</button>
+        <button type="submit" class="btn" id="enviar">Enviar</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="v-done" hidden>
+    <div class="card done" style="--c:var(--brand2);margin-top:24px">
+      <div class="ok"><svg width="40" height="40" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
+      <h2 style="font-size:28px">Resposta registrada</h2>
+      <p>Obrigado pela contribuição à harmonização dos Regimentos Internos das UDs.</p>
+      <p style="color:var(--mute)">Protocolo: <code id="proto"></code></p>
+      <div class="actions" style="justify-content:center">
+        <button class="btn ghost" id="nova">Enviar outra resposta</button>
+        <button class="btn" id="verPainel">Ver resultados</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-painel" hidden>
+
+    <div id="res">
+      <div class="head" style="border-radius:16px;margin-top:20px">
+        <h1 style="font-size:clamp(24px,4vw,32px)">Resultados da consulta</h1>
+        <p id="resumo">—</p>
+        <div class="tool">
+          <select id="fUni" aria-label="Filtrar por Unidade"><option value="">Todas as Unidades</option></select>
+          <input type="search" id="fBusca" placeholder="Buscar respondente (nome, e-mail, Unidade)" aria-label="Buscar respondente">
+          <label class="ck"><input type="checkbox" id="fUltima" checked> Só a última resposta de cada e-mail</label>
+        </div>
+        <div class="tool">
+          <button class="sbtn" id="atualizar">Atualizar dados</button>
+          <button class="sbtn" id="csv">Exportar CSV</button>
+          <span id="pUpd" style="color:var(--mute);font-size:14px"></span>
+        </div>
+        <div class="mode" role="group" aria-label="Tipo de resultado">
+          <button data-mode="cons" aria-pressed="true">Resultado consolidado</button>
+          <button data-mode="ind" aria-pressed="false">Resultado por respondente</button>
+        </div>
+      </div>
+      <div id="pBody"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+{
+const SUPABASE_URL = 'https://xcurxfnptegcvdeyfnus.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_D0XZrifjpr9ICwJHytPK3g_L-RLV6k5';
+const TABLE = 'regimento_respostas';
+const DRAFT = 'formregimento-rascunho';
+
+const EIXOS = [
+  {t:'EIXO I - FINALIDADES, ARQUITETURA REGIMENTAL E TÉCNICA NORMATIVA', c:'--e1', qs:[
+    {id:'q1', type:'multi', max:2, title:'Questão 1 - Atualização das finalidades e competências:',
+     desc:'Quais aspectos devem receber maior atenção na atualização das finalidades e competências regimentais das UDs, considerando a organização institucional vigente da Embrapa?',
+     ins:'Selecione até duas alternativas', opts:[
+      ['A','A) Adequação das finalidades regimentais à missão institucional das UDs.'],
+      ['B','B) Atualização das competências diante das mudanças na organização e nos macroprocessos da Embrapa.'],
+      ['C','C) Inclusão ou atualização de competências institucionais insuficientemente contempladas no modelo atual.'],
+      ['D','D) Exclusão de competências que não integrem mais as responsabilidades institucionais das UDs.']]},
+    {id:'q2', type:'single', title:'Questão 2 — Modelo de arquitetura regimental comum:',
+     desc:'Qual modelo de padronização deve orientar a elaboração de uma arquitetura regimental comum para as UDs?',
+     ins:'Selecione uma alternativa', opts:[
+      ['A','A) Modelo integralmente padronizado, com estruturas, nomenclaturas, competências e vínculos uniformes.'],
+      ['B','B) Estruturas e competências essenciais padronizadas, admitidas diferenciações tecnicamente justificadas.'],
+      ['C','C) Competências padronizadas, com flexibilidade para estruturas e vínculos organizacionais distintos.'],
+      ['D','D) Diretrizes gerais comuns, com maior flexibilidade na definição da organização interna das UDs.']]},
+    {id:'q3', type:'rank', title:'Questão 3 — Simplificação e uniformização do conteúdo regimental:',
+     desc:'Qual diretriz deve receber maior atenção na simplificação e uniformização dos Regimentos Internos das UDs?',
+     ins:'Ordene os itens abaixo por grau de prioridade, sendo 1 a menor e 4 a maior prioridade', opts:[
+      ['concentrar','Concentrar o conteúdo nas finalidades, competências e responsabilidades institucionais.'],
+      ['remeter','Remeter rotinas e procedimentos operacionais detalhados a instrumentos próprios de gestão.'],
+      ['evitar','Evitar reproduzir desnecessariamente disposições de normas corporativas.'],
+      ['padroes','Adotar padrões uniformes de redação, terminologia e organização do texto regimental']],
+     just:['q3_justificativa','Justifique a ordem de prioridade escolhida acima:']}
+  ]},
+  {t:'EIXO II - ALINHAMENTO INSTITUCIONAL E INTEGRAÇÃO ENTRE SEDE E UDs', c:'--e2', qs:[
+    {id:'q4', type:'multi', max:2, title:'Questão 4 — Interfaces entre Unidades Centrais e UDs',
+     desc:'Em quais macroprocessos institucionais a definição das interfaces entre Sede e UDs deve receber maior atenção na harmonização regimental?',
+     ins:'Priorize até duas alternativas.', opts:[
+      ['A','A) Governança, planejamento, integridade, riscos e controles internos — DEGI.'],
+      ['B','B) Pesquisa, desenvolvimento e inovação — DEPD.'],
+      ['C','C) Transferência de tecnologia e inovação social — DINT.'],
+      ['D','D) Negócios e inovação tecnológica — DENE.'],
+      ['E','E) Administração, pessoas, orçamento e infraestrutura — DADM.'],
+      ['F','F) Processos transversais que envolvam mais de uma Diretoria.']],
+     just:['q4_justificativa','Justifique o motivo desta Priorização:']}
+  ]},
+  {t:'EIXO III - GOVERNANÇA E ORGANIZAÇÃO INSTITUCIONAL', c:'--e3', qs:[
+    {id:'q5', type:'rank', title:'Questão 5 — Competências e estruturas organizacionais',
+     desc:'Qual aspecto deve ser priorizado na harmonização das competências, responsabilidades e estruturas organizacionais das UDs?',
+     ins:'Ordene os itens abaixo por grau de prioridade, sendo 1 a menor e 4 a maior prioridade',
+     note:'As estruturas organizacionais devem ser distinguidas das funções gerenciais.', opts:[
+      ['a','A) Delimitação de atribuições para evitar duplicidades e sobreposições.'],
+      ['b','B) Distinção entre coordenação, execução, apoio e supervisão, observada a segregação de funções.'],
+      ['c','C) Uniformização de nomenclaturas e competências de estruturas equivalentes.'],
+      ['d','D) Clareza dos vínculos organizacionais e compatibilidade com a estrutura formalmente autorizada.']],
+     just:['q5_justificativa','Justifique o motivo da priorização acima']},
+    {id:'q6', type:'multi', max:2, title:'Questão 6 — Temas transversais de governança',
+     desc:'Quais temas transversais devem receber maior atenção na padronização das competências regimentais das UDs?',
+     ins:'Selecione até duas alternativas.', opts:[
+      ['A','A) Governança corporativa e planejamento institucional.'],
+      ['B','B) Gestão de riscos, controles internos e integridade.'],
+      ['C','C) Gestão da informação e do conhecimento.'],
+      ['D','D) Segurança da informação e proteção de dados pessoais.'],
+      ['E','E) Monitoramento de desempenho e resultados institucionais.']]}
+  ]},
+  {t:'EIXO IV — ESPECIFICIDADES E ESTRATÉGIA DE HARMONIZAÇÃO', c:'--e4', qs:[
+    {id:'q7', type:'multi', max:2, title:'Questão 7 — Critérios para configurações diferenciadas',
+     desc:'Quais fatores devem ser considerados para justificar configurações organizacionais diferenciadas em relação à arquitetura regimental comum das UDs?',
+     ins:'Selecione até duas alternativas.', note:'Exceções dependerão de justificativa técnica e avaliação pelas instâncias competentes.', opts:[
+      ['A','A) Características científicas e tecnológicas singulares da missão institucional.'],
+      ['B','B) Abrangência territorial e dispersão geográfica das atividades.'],
+      ['C','C) Infraestrutura experimental ou laboratorial que demande organização específica.'],
+      ['D','D) Exigências legais, regulatórias ou de segurança próprias das atividades.'],
+      ['E','E) Responsabilidades institucionais específicas não contempladas adequadamente na arquitetura comum.']]},
+    {id:'q8', type:'single', title:'Questão 8 — Estratégia de condução da harmonização',
+     desc:'Qual estratégia você considera mais adequada para conduzir a revisão e harmonização dos Regimentos Internos das UDs, assegurando padronização institucional, participação das Unidades e tratamento das especificidades justificadas?',
+     ins:'Selecione uma alternativa.', note:'A condução e a aprovação permanecem sujeitas às competências institucionais.', opts:[
+      ['A','A) Elaboração de minuta-padrão pela Sede, seguida de consulta às UDs para contribuições e identificação de especificidades.'],
+      ['B','B) Construção participativa de minuta-padrão por grupo de trabalho com representantes da Sede e das UDs, seguida de validação institucional.'],
+      ['C','C) Definição de diretrizes e competências comuns pela Sede, com propostas de adequação pelas UDs e posterior consolidação institucional.'],
+      ['D','D) Revisão individual dos Regimentos pelas UDs, seguida de análise e uniformização pela Sede.']]}
+  ]}
+];
+const QS = EIXOS.flatMap(e => e.qs.map(q => ({...q, c:e.c})));
+const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const $ = s => document.querySelector(s);
+
+function qHTML(q){
+  let body = '';
+  if (q.type === 'rank') {
+    body = `<div class="scale"><span>1 = menor · 4 = maior prioridade</span></div><div class="rank">` +
+      q.opts.map(([k,t]) => `<div class="rrow" role="radiogroup" aria-label="${esc(t)}"><div>${esc(t)}</div><div class="pills">` +
+        [1,2,3,4].map(n => `<label class="pill"><input type="radio" name="${q.id}_${k}" value="${n}" data-col="${n}" aria-label="Prioridade ${n}"><span>${n}</span></label>`).join('') +
+      `</div></div>`).join('') + `</div>`;
+  } else {
+    const typ = q.type === 'multi' ? 'checkbox' : 'radio';
+    body = `<div class="opts">` + q.opts.map(([k,t]) =>
+      `<label class="opt"><input type="${typ}" name="${q.id}" value="${k}"><span>${esc(t)}</span></label>`).join('') + `</div>` +
+      (q.type === 'multi' ? `<div class="cnt" id="cnt-${q.id}">0 de ${q.max} selecionadas</div>` : '');
+  }
+  const msg = q.type === 'rank' ? 'Atribua uma posição diferente (1 a 4) a cada item.' :
+              q.type === 'multi' ? 'Selecione pelo menos uma e no máximo duas alternativas.' : 'Esta pergunta é obrigatória.';
+  let h = `<div class="card" id="c-${q.id}"><div class="qt"><span>${esc(q.title)}</span><span class="req">*</span></div>
+    <p class="qd">${esc(q.desc)}</p><p class="ins${q.type==='rank'?' it':''}">${esc(q.ins)}</p>
+    ${q.note?`<p class="note">${esc(q.note)}</p>`:''}${body}<div class="msg">${msg}</div></div>`;
+  if (q.just) h += `<div class="card"><label for="${q.just[0]}" style="display:block">${esc(q.just[1])}</label>
+    <textarea id="${q.just[0]}" name="${q.just[0]}" rows="2" maxlength="4000" placeholder="Sua resposta"></textarea></div>`;
+  return h;
+}
+$('#qs').innerHTML = EIXOS.map(e => `<div class="sec" style="--c:var(${e.c})"><div class="sech">${esc(e.t)}</div>${e.qs.map(qHTML).join('').replace('<div class="card"','<div class="card" style="margin-top:0;border-radius:0 0 12px 12px"')}</div>`).join('') +
+  `<div class="sec" style="--c:var(--e5)"><div class="sech">OBSERVAÇÕES COMPLEMENTARES (OPCIONAL)</div>
+   <div class="card" style="margin-top:0;border-radius:0 0 12px 12px"><label for="observacoes" style="display:block">Registre, caso necessário, diretriz ou prioridade relevante não contemplada nas alternativas. Não é necessário indicar dispositivos específicos dos Regimentos Internos nesta etapa.</label>
+   <textarea id="observacoes" name="observacoes" rows="3" maxlength="6000" placeholder="Sua resposta"></textarea></div></div>`;
+
+const form = $('#f');
+
+function answer(q){
+  if (q.type === 'multi') return [...form.querySelectorAll(`input[name="${q.id}"]:checked`)].map(i => i.value);
+  if (q.type === 'single') return form.querySelector(`input[name="${q.id}"]:checked`)?.value || null;
+  const o = {}; q.opts.forEach(([k]) => { const v = form.querySelector(`input[name="${q.id}_${k}"]:checked`); o[k] = v ? +v.value : null; });
+  return o;
+}
+function valid(q){
+  const a = answer(q);
+  if (q.type === 'multi') return a.length >= 1 && a.length <= q.max;
+  if (q.type === 'single') return !!a;
+  const v = Object.values(a); return v.every(Boolean) && new Set(v).size === 4;
+}
+const emailOk = () => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($('#email').value.trim());
+
+function refresh(){
+  const n = QS.filter(valid).length;
+  $('#barI').style.width = (n/8*100) + '%';
+  $('#barT').textContent = `${n} de 8`;
+  QS.filter(q => q.type === 'multi').forEach(q => {
+    const sel = answer(q).length;
+    $('#cnt-'+q.id).textContent = `${sel} de ${q.max} selecionadas`;
+    form.querySelectorAll(`input[name="${q.id}"]`).forEach(i => i.disabled = !i.checked && sel >= q.max);
+  });
+  QS.forEach(q => { const c = $('#c-'+q.id); if (c.classList.contains('bad') && valid(q)) c.classList.remove('bad'); });
+  if (emailOk()) $('#c-id').classList.remove('bad');
+}
+
+form.addEventListener('change', e => {
+  const t = e.target;
+  // Ordenação: cada posição só pode ser usada uma vez (como no Google Forms, uma resposta por coluna)
+  if (t.dataset.col) {
+    const q = t.name.split('_')[0];
+    form.querySelectorAll(`input[name^="${q}_"][data-col="${t.value}"]:checked`).forEach(i => { if (i !== t) i.checked = false; });
+  }
+  refresh(); saveDraft();
+});
+form.addEventListener('input', e => { if (e.target.matches('textarea,input[type=text],input[type=email]')) { saveDraft(); refresh(); } });
+
+function saveDraft(){
+  try {
+    const d = {};
+    form.querySelectorAll('input,textarea').forEach(i => {
+      if (i.type === 'checkbox' || i.type === 'radio') { if (i.checked) (d[i.name] ||= []).push(i.value); }
+      else d[i.name] = i.value;
+    });
+    localStorage.setItem(DRAFT, JSON.stringify(d));
+  } catch(_){}
+}
+function loadDraft(){
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); if (!d) return;
+    form.querySelectorAll('input,textarea').forEach(i => {
+      if (i.type === 'checkbox' || i.type === 'radio') i.checked = (d[i.name] || []).includes(i.value);
+      else if (d[i.name] != null) i.value = d[i.name];
+    });
+  } catch(_){}
+}
+
+function payload(){
+  const p = {
+    id: crypto.randomUUID ? crypto.randomUUID() : undefined,
+    nome: $('#nome').value.trim() || null,
+    email: $('#email').value.trim().toLowerCase(),
+    unidade: $('#unidade').value.trim() || null,
+    q1: answer(QS[0]), q2: answer(QS[1]),
+    q4: answer(QS[3]), q6: answer(QS[5]), q7: answer(QS[6]), q8: answer(QS[7]),
+    observacoes: $('#observacoes').value.trim() || null,
+    user_agent: navigator.userAgent.slice(0, 300)
+  };
+  const r3 = answer(QS[2]); Object.entries(r3).forEach(([k,v]) => p['q3_'+k] = v);
+  const r5 = answer(QS[4]); Object.entries(r5).forEach(([k,v]) => p['q5_'+k] = v);
+  ['q3_justificativa','q4_justificativa','q5_justificativa'].forEach(k => p[k] = $('#'+k).value.trim() || null);
+  return p;
+}
+
+function toast(msg){ const t = $('#toast'); t.className = msg ? 'toast err' : 'toast'; t.textContent = msg || ''; }
+
+form.addEventListener('submit', async e => {
+  e.preventDefault(); toast('');
+  const bad = QS.filter(q => !valid(q));
+  bad.forEach(q => $('#c-'+q.id).classList.add('bad'));
+  if (!emailOk()) $('#c-id').classList.add('bad');
+  const first = form.querySelector('.card.bad');
+  if (first) { first.scrollIntoView({behavior:'smooth', block:'start'}); toast('Há perguntas obrigatórias sem resposta ou com resposta inválida.'); return; }
+
+  const btn = $('#enviar'); btn.disabled = true; btn.textContent = 'Enviando…';
+  const body = payload();
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
+      method:'POST',
+      headers:{ apikey:SUPABASE_KEY, 'Content-Type':'application/json', Prefer:'return=minimal' },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) { const t = await r.text(); throw new Error(t || r.statusText); }
+    try { localStorage.removeItem(DRAFT); } catch(_){}
+    $('#proto').textContent = (body.id || '').slice(0, 8).toUpperCase() || new Date().toISOString();
+    show('done');
+  } catch(err) {
+    toast('Não foi possível enviar agora. Suas respostas continuam salvas neste navegador; tente novamente. Detalhe: ' + String(err.message).slice(0, 200));
+  } finally { btn.disabled = false; btn.textContent = 'Enviar'; }
+});
+
+// Limpar (diálogo próprio em duas etapas, sem confirm())
+let armed = false;
+$('#limpar').addEventListener('click', () => {
+  const b = $('#limpar');
+  if (!armed) { armed = true; b.textContent = 'Clique de novo para confirmar'; setTimeout(() => { armed = false; b.textContent = 'Limpar formulário'; }, 3500); return; }
+  armed = false; b.textContent = 'Limpar formulário';
+  form.reset(); form.querySelectorAll('.bad').forEach(c => c.classList.remove('bad'));
+  try { localStorage.removeItem(DRAFT); } catch(_){}
+  refresh(); toast(''); window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// Navegação entre vistas
+function show(v){
+  $('#v-form').hidden = v !== 'form'; $('#v-done').hidden = v !== 'done'; $('#v-painel').hidden = v !== 'painel';
+  $('#t-form').setAttribute('aria-selected', v !== 'painel'); $('#t-painel').setAttribute('aria-selected', v === 'painel');
+  $('#prog').style.display = v === 'form' ? '' : 'none';
+  if (v === 'painel') { loadPainel(); if (location.hash !== '#resultados') history.replaceState(null, '', '#resultados'); }
+  else if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo({top:0});
+}
+$('#t-form').onclick = () => show('form');
+$('#t-painel').onclick = () => show('painel');
+$('#nova').onclick = () => { form.reset(); refresh(); show('form'); };
+$('#verPainel').onclick = () => show('painel');
+// ===== Aba Resultados (dados individuais via função protegida resultados_regimento) =====
+let DATA = null;
+const SHORT3 = {concentrar:'Concentrar', remeter:'Remeter', evitar:'Evitar', padroes:'Padrões'};
+const QNUM = id => id.replace('q','Q');
+const uniOf = r => (r.unidade || '').trim() || 'Não informada';
+const who = r => (r.nome || '').trim() || r.email;
+const fmtD = d => new Date(d).toLocaleString('pt-BR', {day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit'});
+const optText = (q, k) => (q.opts.find(o => o[0] === k) || [k, k])[1];
+const shortKey = (q, k) => q.id === 'q3' ? SHORT3[k] : k.toUpperCase();
+const pct = (n, N) => N ? Math.round(n / N * 100) : 0;
+function rankOrder(r, q){ return q.opts.map(([k]) => [k, r[q.id + '_' + k]]).sort((a,b) => b[1] - a[1]); }
+function ansShort(r, q){
+  if (q.type === 'multi') return (r[q.id] || []).join(', ');
+  if (q.type === 'single') return r[q.id] || '';
+  return rankOrder(r, q).map(([k]) => shortKey(q, k)).join(' › ');
+}
+
+function view(){
+  let rows = DATA || [];
+  if ($('#fUltima').checked) {
+    const seen = new Set();
+    rows = rows.filter(r => { const e = (r.email || '').toLowerCase(); if (seen.has(e)) return false; seen.add(e); return true; }); // DATA vem do mais recente ao mais antigo
+  }
+  const u = $('#fUni').value, s = $('#fBusca').value.trim().toLowerCase();
+  if (u) rows = rows.filter(r => uniOf(r) === u);
+  if (s) rows = rows.filter(r => [r.nome, r.email, r.unidade].join(' ').toLowerCase().includes(s));
+  return rows;
+}
+
+function chartChoice(q, rows){
+  const N = rows.length;
+  const data = q.opts.map(([k,t]) => {
+    const who_ = rows.filter(r => q.type === 'multi' ? (r[q.id] || []).includes(k) : r[q.id] === k);
+    return {k, t, n:who_.length, who:who_};
+  });
+  const max = Math.max(1, ...data.map(d => d.n));
+  const lead = [...data].sort((a,b) => b.n - a.n)[0];
+  return (N && lead.n ? `<p class="qd"><b>Mais indicada:</b> ${esc(lead.t)} — ${lead.n} de ${N} (${pct(lead.n,N)}%).</p>` : '') +
+    `<div class="hb">` + data.map(d => `<div class="hbr"><div class="t">${esc(d.t)}</div><div class="tr"><i style="width:${d.n/max*100}%"></i></div><div class="v">${d.n} · ${pct(d.n,N)}%</div>` +
+      (d.n ? `<div class="names">${d.who.map(r => `<span>${esc(who(r))}</span>`).join('')}</div>` : '') + `</div>`).join('') + `</div>` +
+    (q.type === 'multi' ? `<p class="cnt">Percentual sobre ${N} respondente(s); cada pessoa pode marcar até ${q.max} alternativas.</p>` : '');
+}
+function chartRank(q, rows){
+  const N = rows.length;
+  const items = q.opts.map(([k,t]) => {
+    const vals = rows.map(r => r[q.id + '_' + k]).filter(Boolean);
+    const dist = [1,2,3,4].map(p => vals.filter(v => v === p).length);
+    const avg = vals.length ? vals.reduce((a,b) => a + b, 0) / vals.length : 0;
+    return {k, t, dist, avg, top: dist[3]};
+  }).sort((a,b) => b.avg - a.avg);
+  return `<p class="qd"><b>Maior prioridade média:</b> ${esc(items[0].t)} (média ${items[0].avg.toFixed(2).replace('.',',')}; ${items[0].top} respondente(s) atribuíram 4).</p>
+    <div class="scroll"><table><thead><tr><th>#</th><th>Item</th><th class="n">Média</th><th class="n">Nota 4</th><th style="min-width:160px">Distribuição das notas</th></tr></thead><tbody>` +
+    items.map((it,i) => `<tr><td>${i+1}º</td><td>${esc(it.t)}</td><td class="n"><b>${it.avg.toFixed(2).replace('.',',')}</b></td><td class="n">${it.top}</td>
+      <td><div class="stk" title="${it.dist.map((n,p) => `Nota ${p+1}: ${n}`).join(' · ')}">${it.dist.map((n,p) => n ? `<i class="p${p+1}" style="width:${n/N*100}%"></i>` : '').join('')}</div></td></tr>`).join('') +
+    `</tbody></table></div><div class="leg"><span><i class="p1"></i>1 (menor)</span><span><i class="p2"></i>2</span><span><i class="p3"></i>3</span><span><i class="p4"></i>4 (maior)</span></div>`;
+}
+
+let MODE = 'cons', SEL = null;
+const initials = r => who(r).split(/[\s.@]+/).filter(Boolean).slice(0,2).map(s => s[0].toUpperCase()).join('');
+
+function indivTable(q, rows){
+  const body = rows.map(r => {
+    let a;
+    if (q.type === 'rank') a = rankOrder(r,q).map(([k,v]) => `<b>${v}</b> ${esc(shortKey(q,k))}`).join(' · ');
+    else a = (q.type === 'multi' ? (r[q.id] || []) : [r[q.id]]).map(k => `<span title="${esc(optText(q,k))}">${esc(optText(q,k))}</span>`).join('<br>');
+    const j = q.just && r[q.just[0]] ? `<br><small style="color:var(--mute)"><i>Justificativa:</i> ${esc(r[q.just[0]])}</small>` : '';
+    return `<tr class="go" data-id="${esc(r.id)}"><td><b>${esc(who(r))}</b><br><small style="color:var(--mute)">${esc(uniOf(r))}</small></td><td>${a}${j}</td></tr>`;
+  }).join('');
+  return `<details class="indiv"${rows.length <= 12 ? ' open' : ''}><summary>Resposta de cada respondente (${rows.length})</summary>
+    <div class="scroll"><table><thead><tr><th style="width:32%">Respondente</th><th>Resposta${q.type === 'rank' ? ' (nota › item, da maior para a menor)' : ''}</th></tr></thead><tbody>${body}</tbody></table></div></details>`;
+}
+
+function renderCons(rows){
+  const unis = {}; rows.forEach(r => (unis[uniOf(r)] ||= []).push(r));
+  const top = (rs, id) => { const c = {}; rs.forEach(r => c[r[id]] = (c[r[id]] || 0) + 1); const b = Object.entries(c).sort((a,b) => b[1]-a[1])[0]; return b ? `${b[0]} (${b[1]})` : '—'; };
+  const ult = rows.reduce((m, r) => r.created_at > m ? r.created_at : m, rows[0].created_at);
+  let h = `<h2 class="rt" id="r-geral">Visão geral</h2>
+  <div class="kpis" style="margin-top:8px">
+    <div class="kpi" style="--c:var(--e1)"><b>${rows.length}</b><span>respondentes considerados</span></div>
+    <div class="kpi" style="--c:var(--e3)"><b>${Object.keys(unis).length}</b><span>Unidades representadas</span></div>
+    <div class="kpi" style="--c:var(--e4)"><b style="font-size:clamp(18px,3vw,24px);padding:6px 0">${fmtD(ult)}</b><span>última resposta</span></div></div>
+  <div class="tw scroll"><table><thead><tr><th>Unidade</th><th class="n">Respondentes</th><th>Quem respondeu</th><th>Q2 predominante</th><th>Q8 predominante</th></tr></thead><tbody>` +
+    Object.entries(unis).sort((a,b) => b[1].length - a[1].length).map(([u,rs]) =>
+      `<tr><td>${esc(u)}</td><td class="n">${rs.length}</td><td>${rs.map(r => esc(who(r))).join(', ')}</td><td>${esc(top(rs,'q2'))}</td><td>${esc(top(rs,'q8'))}</td></tr>`).join('') +
+  `</tbody></table></div>`;
+
+  h += `<h2 class="rt" id="r-questoes">Resultado consolidado por questão</h2><p class="rsub">Em cada alternativa: total, percentual e os nomes de quem a escolheu. Abaixo de cada questão, a resposta de cada respondente.</p>`;
+  h += EIXOS.map(e => `<div class="sec" style="--c:var(${e.c})"><div class="sech">${esc(e.t)}</div>` +
+    e.qs.map(q => `<div class="card"><div class="qt"><span>${esc(q.title)}</span></div>${q.type === 'rank' ? chartRank(q, rows) : chartChoice(q, rows)}${indivTable(q, rows)}</div>`).join('') + `</div>`).join('');
+
+  h += `<h2 class="rt" id="r-matriz">Quadro-resumo: respostas de cada respondente</h2><p class="rsub">Uma linha por respondente. Nas ordenações, os itens aparecem da maior para a menor prioridade. Clique no nome para ver a ficha completa.</p>
+  <div class="tw scroll"><table class="matrix"><thead><tr><th>Respondente</th><th>Unidade</th><th>Data</th>${QS.map(q => `<th>${QNUM(q.id)}</th>`).join('')}</tr></thead><tbody>` +
+    rows.map(r => `<tr class="go" data-id="${esc(r.id)}"><td><b>${esc(who(r))}</b><br><small style="color:var(--mute)">${esc(r.email)}</small></td><td>${esc(uniOf(r))}</td><td>${fmtD(r.created_at)}</td>${QS.map(q => `<td>${esc(ansShort(r,q))}</td>`).join('')}</tr>`).join('') +
+  `</tbody></table></div><p class="cnt">Q3: Concentrar = finalidades e competências; Remeter = rotinas a instrumentos de gestão; Evitar = reproduzir normas corporativas; Padrões = redação e terminologia.</p>`;
+
+  const TX = [['q3_justificativa','Questão 3 — Justificativa da ordem de prioridade', QS[2], '--e1'],
+              ['q4_justificativa','Questão 4 — Justificativa da priorização', QS[3], '--e2'],
+              ['q5_justificativa','Questão 5 — Justificativa da priorização', QS[4], '--e3'],
+              ['observacoes','Observações complementares', null, '--e5']];
+  h += `<h2 class="rt" id="r-textos">Justificativas e observações</h2><p class="rsub">Textos livres, com o autor e a resposta dada na questão correspondente.</p>` +
+    TX.map(([f, title, q, c]) => {
+      const items = rows.filter(r => (r[f] || '').trim());
+      return `<div class="sec" style="--c:var(${c})"><div class="sech">${esc(title)} · ${items.length} texto(s)</div><div class="card" style="margin-top:0;border-radius:0 0 12px 12px">` +
+        (items.length ? items.map(r => `<div class="quote"><footer style="margin:0 0 6px"><b style="color:var(--ink)">${esc(who(r))}</b> · ${esc(uniOf(r))}${q ? ` · resposta: ${esc(ansShort(r,q))}` : ''}</footer><p>${esc(r[f])}</p></div>`).join('')
+                      : '<p class="rsub">Nenhum texto registrado.</p>') + `</div></div>`;
+    }).join('');
+  return h;
+}
+
+// Ficha de um respondente: a resposta dele destacada, comparada com o consolidado
+function ficha(r, rows){
+  const N = rows.length;
+  let h = `<article class="pessoa" id="f-${esc(r.id)}">
+    <header class="ph"><div class="av">${esc(initials(r))}</div><div><h3>${esc(who(r))}</h3>
+      <p>${esc(r.email)} · <b>${esc(uniOf(r))}</b> · respondido em ${fmtD(r.created_at)}</p></div></header>`;
+  h += EIXOS.map(e => `<div class="sec" style="--c:var(${e.c});margin-top:18px"><div class="sech">${esc(e.t)}</div>` + e.qs.map((q,i) => {
+    let b;
+    if (q.type === 'rank') {
+      const avgs = Object.fromEntries(q.opts.map(([k]) => { const v = rows.map(x => x[q.id+'_'+k]).filter(Boolean); return [k, v.reduce((a,c) => a+c, 0) / (v.length || 1)]; }));
+      const posGeral = Object.fromEntries(Object.entries(avgs).sort((a,b) => b[1]-a[1]).map(([k],i) => [k, i+1]));
+      b = `<div class="scroll"><table><thead><tr><th>Item</th><th class="n">Nota dada por ${esc(who(r).split(' ')[0])}</th><th class="n">Média geral</th><th class="n">Posição geral</th></tr></thead><tbody>` +
+        rankOrder(r,q).map(([k,v]) => `<tr><td>${esc(optText(q,k))}</td><td class="n"><span class="nota">${v}</span></td><td class="n">${avgs[k].toFixed(2).replace('.',',')}</td><td class="n">${posGeral[k]}º</td></tr>`).join('') +
+        `</tbody></table></div><p class="cnt">Nota 4 = maior prioridade.</p>`;
+    } else {
+      const mine = q.type === 'multi' ? (r[q.id] || []) : [r[q.id]];
+      b = `<div class="cmp">` + q.opts.map(([k,t]) => {
+        const n = rows.filter(x => q.type === 'multi' ? (x[q.id] || []).includes(k) : x[q.id] === k).length, sel = mine.includes(k);
+        return `<div class="co${sel ? ' sel' : ''}"><div class="ct">${sel ? '<span class="tag">✓ Escolhida</span> ' : ''}${esc(t)}</div>
+          <div class="cb"><div class="tr"><i style="width:${pct(n,N)}%"></i></div><small>${n} de ${N} (${pct(n,N)}%)</small></div></div>`;
+      }).join('') + `</div>`;
+    }
+    const j = q.just ? `<div class="just"><b>Justificativa:</b> ${r[q.just[0]] ? esc(r[q.just[0]]) : '<i style="color:var(--mute)">não informada</i>'}</div>` : '';
+    return `<div class="card"${i === 0 ? ' style="margin-top:0;border-radius:0 0 12px 12px"' : ''}><div class="qt"><span>${esc(q.title)}</span></div>${b}${j}</div>`;
+  }).join('') + `</div>`).join('');
+  h += `<div class="sec" style="--c:var(--e5);margin-top:18px"><div class="sech">OBSERVAÇÕES COMPLEMENTARES</div><div class="card" style="margin-top:0;border-radius:0 0 12px 12px">${r.observacoes ? `<p style="margin:0;white-space:pre-wrap">${esc(r.observacoes)}</p>` : '<p class="rsub" style="margin:0">Nenhuma observação registrada.</p>'}</div></div>`;
+  return h + `</article>`;
+}
+
+function renderInd(rows){
+  if (!SEL || (SEL !== '*' && !rows.some(r => r.id === SEL))) SEL = rows[0].id;
+  const i = rows.findIndex(r => r.id === SEL);
+  let h = `<div class="pbar">
+    <label for="selR" class="sr">Respondente</label>
+    <select id="selR"><option value="*"${SEL === '*' ? ' selected' : ''}>Todos os respondentes (${rows.length})</option>${rows.map((r,k) => `<option value="${esc(r.id)}"${r.id === SEL ? ' selected' : ''}>${k+1}. ${esc(who(r))} — ${esc(uniOf(r))}</option>`).join('')}</select>
+    <button class="sbtn" id="prevR"${SEL === '*' || i <= 0 ? ' disabled' : ''}>‹ Anterior</button>
+    <button class="sbtn" id="nextR"${SEL === '*' || i >= rows.length - 1 ? ' disabled' : ''}>Próximo ›</button>
+    <span class="rsub" style="margin:0">${SEL === '*' ? `${rows.length} fichas` : `${i+1} de ${rows.length}`}</span></div>`;
+  h += (SEL === '*' ? rows : [rows[i]]).map(r => ficha(r, rows)).join('');
+  return h;
+}
+
+function renderRes(){
+  const el = $('#pBody'), rows = view(), all = DATA || [];
+  const emails = new Set(all.map(r => (r.email || '').toLowerCase()));
+  $('#resumo').textContent = `${all.length} resposta(s) recebida(s) de ${emails.size} respondente(s) distintos. Exibindo ${rows.length} conforme os filtros.`;
+  document.querySelectorAll('.mode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === MODE));
+  if (!rows.length) { el.innerHTML = '<div class="card empty" style="--c:var(--brand)">Nenhuma resposta para os filtros escolhidos.</div>'; return; }
+  el.innerHTML = MODE === 'cons' ? renderCons(rows) : renderInd(rows);
+}
+function openPessoa(id){ MODE = 'ind'; SEL = id; renderRes(); $('#res').scrollIntoView({behavior:'smooth'}); }
+
+function fillUnis(){
+  const sel = $('#fUni'), cur = sel.value;
+  const us = [...new Set((DATA || []).map(uniOf))].sort((a,b) => a.localeCompare(b, 'pt-BR'));
+  sel.innerHTML = '<option value="">Todas as Unidades</option>' + us.map(u => `<option${u === cur ? ' selected' : ''}>${esc(u)}</option>`).join('');
+}
+
+async function loadPainel(){
+  $('#pUpd').textContent = 'Carregando…';
+  if (!DATA) $('#pBody').innerHTML = '<div class="empty">Carregando…</div>';
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/resultados_regimento`, {
+      method:'POST', headers:{ apikey:SUPABASE_KEY, 'Content-Type':'application/json' }, body:'{}' });
+    const txt = await r.text();
+    if (!r.ok) { let m = txt; try { m = JSON.parse(txt).message || txt; } catch(_){} throw new Error(m); }
+    DATA = JSON.parse(txt);
+    fillUnis(); renderRes();
+    $('#pUpd').textContent = 'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+  } catch(err) {
+    $('#pUpd').textContent = '';
+    const m = 'Não foi possível carregar os resultados. Verifique se o script SQL foi executado no Supabase. ' + String(err.message).slice(0,160);
+    if (DATA) $('#pUpd').textContent = 'Falha ao atualizar.';
+    else $('#pBody').innerHTML = `<div class="card empty" style="--c:var(--err)">${esc(m)}</div>`;
+  }
+}
+$('#atualizar').onclick = () => loadPainel();
+['fUni','fUltima'].forEach(id => $('#'+id).addEventListener('change', renderRes));
+$('#fBusca').addEventListener('input', renderRes);
+document.querySelector('.mode').addEventListener('click', e => { const m = e.target.dataset.mode; if (m) { MODE = m; renderRes(); } });
+$('#pBody').addEventListener('click', e => {
+  if (e.target.closest('#prevR,#nextR')) {
+    const rows = view(), i = rows.findIndex(r => r.id === SEL), j = i + (e.target.id === 'nextR' ? 1 : -1);
+    if (rows[j]) { SEL = rows[j].id; renderRes(); $('#res').scrollIntoView({behavior:'smooth'}); }
+    return;
+  }
+  const tr = e.target.closest('tr.go'); if (tr) openPessoa(tr.dataset.id);
+});
+$('#pBody').addEventListener('change', e => { if (e.target.id === 'selR') { SEL = e.target.value; renderRes(); } });
+
+// Exportação CSV (separador ;, com BOM — abre direto no Excel em português)
+$('#csv').onclick = () => {
+  const rows = view();
+  const cols = [['Data', r => fmtD(r.created_at)], ['Nome', r => r.nome || ''], ['E-mail', r => r.email], ['Unidade', r => r.unidade || ''],
+    ['Q1', r => (r.q1||[]).join(', ')], ['Q2', r => r.q2],
+    ...QS[2].opts.map(([k]) => ['Q3 ' + SHORT3[k], r => r['q3_' + k]]), ['Q3 justificativa', r => r.q3_justificativa || ''],
+    ['Q4', r => (r.q4||[]).join(', ')], ['Q4 justificativa', r => r.q4_justificativa || ''],
+    ...'abcd'.split('').map(k => ['Q5 ' + k.toUpperCase(), r => r['q5_' + k]]), ['Q5 justificativa', r => r.q5_justificativa || ''],
+    ['Q6', r => (r.q6||[]).join(', ')], ['Q7', r => (r.q7||[]).join(', ')], ['Q8', r => r.q8], ['Observações', r => r.observacoes || '']];
+  const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const csv = '﻿' + [cols.map(c => q(c[0])).join(';'), ...rows.map(r => cols.map(c => q(c[1](r))).join(';'))].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+  a.download = 'regimentos_respostas_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+};
+
+loadDraft(); refresh();
+show(location.hash === '#resultados' ? 'painel' : 'form');
+window.addEventListener('hashchange', () => show(location.hash === '#resultados' ? 'painel' : 'form'));
+}
+</script>
+</body>
+</html>
